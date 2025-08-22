@@ -1,7 +1,32 @@
 {%extends 'base.html'%}
+{%load static%}
 {%block title%}Tazon | Home{%endblock title%}
 {%block body%}
-<main class="py-4 px-2">
-    <h1 class="text-sm">Home Page</h1>
+<main>
+    <div class="flex flex-row overflow-x-auto no-scrollbar">
+        <picture class="min-w-[100%]">
+            <source media="(min-width: 768px)" srcset="{%static '/images/clothing-banner.webp'%}">
+            <source media="(max-width: 768px)" srcset="{%static '/images/clothing-banner-sm.webp'%}">
+            <img src="{%static '/images/bags-banner.webp'%}">
+        </picture>
+        <picture class="min-w-[100%]">
+            <source media="(min-width: 768px)" srcset="{%static '/images/bags-banner.webp'%}">
+            <source media="(max-width: 768px)" srcset="{%static '/images/bags-banner-sm.webp'%}">
+            <img src="{%static '/images/bags-banner.webp'%}">
+        </picture>
+        <picture class="min-w-[100%]">
+            <source media="(min-width: 768px)" srcset="{%static '/images/laptop-banner.webp'%}">
+            <source media="(max-width: 768px)" srcset="{%static '/images/laptop-banner-sm.webp'%}">
+            <img src="{%static '/images/bags-banner.webp'%}">
+        </picture>
+        <picture class="min-w-[100%]">
+            <source media="(min-width: 768px)" srcset="{%static '/images/Smart-watch.webp'%}">
+            <source media="(max-width: 768px)" srcset="{%static '/images/Smart-watch-sm.webp'%}">
+            <img src="{%static '/images/bags-banner.webp'%}">
+        </picture>
+    </div>
+    <div>
+        <h1 class="text-sm">Home Page</h1>
+    </div>
 </main>
 {%endblock body%}

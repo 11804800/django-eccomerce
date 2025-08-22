@@ -1,7 +1,50 @@
 {%extends 'base.html'%}
-{%block title%}Tazon | Hpme{%endblock title%}
+{%block title%}Tazon | Signin{%endblock title%}
+{%block scripts%}
+<script>
+    function greet()
+    {
+        document.querySelector(".messages").style.display="none"
+        
+    }
+</script>
+{%endblock scripts%}
 {%block body%}
-<main class="py-4 px-2">
-    <h1 class="text-sm">Login Page</h1>
+{% if messages %}
+<ul class="messages flex flex-row px-4 py-2 bg-amber-100 w-full justify-between items-center">
+    {% for message in messages %}
+    <li class="{{ message.tags }}" class="font-medium">{{ message }}</li>
+    {% endfor %}
+    <button onclick="greet()" class="text-3xl hover:text-zinc-600 active:text-black">&times;</button>
+</ul>
+{% endif %}
+<main class="py-4 px-2 flex flex-col gap-3.5 justify-center items-center">
+    <h1 class="pb-8 pt-4 font-semibold text-2xl">Login</h1>
+    <div class="w-full md:w-[450px]">
+        <form method="POST" action="{%url 'login'%}" class="flex flex-col gap-3.5">
+            {%csrf_token%}
+            <div class="bg-zinc-200 rounded-md flex flex-col px-4 py-2">
+                <label for="username" class="font-medium text-zinc-700">Email</label>
+                <input type="text" name="email" id="email" class="outline-none">
+            </div>
+            <div class="bg-zinc-200 rounded-md flex flex-col px-4 py-2">
+                <label for="username" class="font-medium text-zinc-700">Password</label>
+                <input type="password" name="password" id="password" class="outline-none">
+            </div>
+            <input
+                class="px-4 py-2 bg-black text-white/85 rounded-md font-medium shadow active:shadow-none hover:bg-black/85 active:bg-black"
+                type="submit" value="Login">
+        </form>
+        <div class="flex flex-row gap-1 items-center py-7">
+            <div class="border border-gray-500 flex-1"></div>
+            <span class="font-medium px-1">Or</span>
+            <div class="border border-gray-500 flex-1"></div>
+        </div>
+        <div class="flex flex-row gap-[2px] justify-center">
+            <p>New Here ?</p>
+            <a href="{%url 'register'%}" class="font-medium text-[navy] hover:border-b active:text-red-700"> Create new
+                account</a>
+        </div>
+    </div>
 </main>
 {%endblock body%}

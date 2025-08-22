@@ -54,6 +54,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+AUTH_USER_MODEL='user_auth.CustomUser'
+
 ROOT_URLCONF = 'eccomerce.urls'
 
 TEMPLATES = [
