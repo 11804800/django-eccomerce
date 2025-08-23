@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth import authenticate,login,get_user_model
+from django.contrib.auth import authenticate,login,get_user_model,logout
 User=get_user_model()
 from django.contrib import messages
+from eccomerce.middleware import auth
 
 # Create your views here.
 def register(request):
@@ -50,5 +51,10 @@ def login_view(request):
         
     return render(request,"signin.html")
 
+@auth
 def dashboard(request):
     return render(request,"dashboard.html")
+
+def logout_view(request):
+    logout(request)
+    return redirect("login")

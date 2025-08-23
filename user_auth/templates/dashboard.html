@@ -1,7 +1,14 @@
 {%extends 'base.html'%}
+{%load static%}
 {%block title%}Tazon | Hpme{%endblock title%}
 {%block body%}
 <main class="py-4 px-2">
-    <h1 class="text-sm">Dashboard Page {{request.user.first_name}}</h1>
+    <h1 class="text-sm">Dashboard</h1>
+    <div>
+        <h1 class="text-4xl py-3 px-2 text-center">Welcome {{request.user.first_name}}</h1>
+        <div>
+            <a href="{%url 'logout'%}" class="bg-[#061129] text-white font-medium px-4 py-2 rounded-md shadow-white">Logout</a>
+        </div>
+    </div>
 </main>
 {%endblock body%}

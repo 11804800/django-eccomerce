@@ -26,7 +26,26 @@
         </picture>
     </div>
     <div>
-        <h1 class="text-sm">Home Page</h1>
+        <div class="flex flex-row gap-5 flex-wrap justify-center items-center py-8">
+            {%for item in products%}
+            <a href="{%url 'products:product_details' item.id item.slug %}">
+                <div class="w-[320px] lg:w-[300px] shadow  rounded-md">
+                    {%if item.preview%}
+                    <img src="{{item.preview.preview1}}" alt="{{item.name}}" class="h-[320px] w-full object-contain" />
+                    {%endif%}
+                    <div class="px-3 py-2 flex flex-col gap-1.5 pb-2">
+                        <p class="font-medium line-clamp-1">{{item.name}}</p>
+                        <div class="flex gap-2.5">
+                            {%if item.cprice%}
+                            <p class="font-medium text-[brown] line-through">${{item.cprice}}</p>
+                            {%endif%}
+                            <p class="text-black font-semibold">${{item.price}}</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {%endfor%}
+        </div>
     </div>
 </main>
 {%endblock body%}

@@ -1,0 +1,155 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block title%}
+Tazon | {{products.name}}
+{%endblock title%}
+{%block scripts%}
+<script>
+    function greet()
+    {
+        document.querySelector(".messages").style.display="none"
+        
+    }
+</script>
+{%endblock scripts%}
+{%block body%}
+{% if messages %}
+<ul class="messages flex flex-row px-4 py-2 bg-amber-100 w-full justify-between items-center">
+    {% for message in messages %}
+    <li class="{{ message.tags }}" class="font-medium">{{ message }}</li>
+    {% endfor %}
+    <button onclick="greet()" class="text-3xl hover:text-zinc-600 active:text-black">&times;</button>
+</ul>
+{% endif %}
+<main class="px-1">
+    <div class="text-sm md:text-xs font-medium py-1 px-1">
+        <a href="/" class="hover:text-[brown]">
+            <i class="fa-solid fa-arrow-left"></i>
+            home
+        </a>
+        /
+        <span class="text-gray-600">
+            {{products.name}}
+        </span>
+    </div>
+    <div class="py-4 flex flex-col md:flex-row gap-2 items-start">
+        <div class="flex flex-col-reverse md:flex-row gap-5 pb-4 md:pb-0 pl-2 items-center pt-2 shrink-0">
+            <div class="flex flex-row  md:flex-col gap-3.5">
+                <img src="{{products.preview.preview1}}" alt="preview1"
+                    class="h-15 md:h-12 w-15 md:w-12 rounded shadow-md" />
+                <img src="{{products.preview.preview2}}" alt="preview2"
+                    class="h-15 md:h-12 w-15 md:w-12 rounded shadow-md" />
+                <img src="{{products.preview.preview3}}" alt="preview3"
+                    class="h-15 md:h-12 1-15 md:w-12 rounded shadow-md" />
+            </div>
+            <img src="{{products.preview.preview1}}" alt="preview1"
+                class="h-[400px] md:h-[500px] w-[500px] rounded shadow-md" />
+        </div>
+        <div class="flex flex-col gap-1 px-2">
+            <h1 class="text-2xl font-medium text-zinc-600 border-b  border-zinc-400 pb-1">{{products.fullname}}</h1>
+            <div class="flex flex-col gap-2 py-2 px-2">
+                <div class="flex flex-row gap-3.5 items-center">
+                    {%if products.label%}
+                    <div class="">
+                        <p class="text-xs text-white bg-[brown] px-2 py-1 rounded shadow w-fit font-medium">
+                            {{products.label}}</p>
+                    </div>
+                    {%endif%}
+                    {%if products.certified%}
+                    <img src="{%static '/images/certified.png' %}" class="h-8" alt="certified">
+                    {%endif%}
+                </div>
+                <div class="flex flex-row font-medium text-xl gap-3.5">
+                    {%if products.cprice%}
+                    <p class="font-medium text-[brown] line-through flex items-start gap-[2px]"><span
+                            class="text-[11px] mt-1">$</span>{{products.cprice}}</p>
+                    {%endif%}
+                    <p class="flex items-start gap-[2px]"><span class="text-[11px] mt-1">$</span>{{products.price}}</p>
+                </div>
+                {%if products.color%}
+                <div class="flex flex-row gap-1">
+                    <p class="font-medium text-zinc-600">Color:</p>
+                    <p class="font-semibold">{{products.color}}</p>
+                </div>
+                {%endif%}
+                {%if products.size%}
+                <div class="flex flex-row gap-1">
+                    <p class="font-medium text-zinc-600">Size:</p>
+                    <p class="font-semibold">{{products.size}}</p>
+                </div>
+                {%endif%}
+                <div>
+                    <h2 class="font-semibold text-lg">Product Details</h2>
+                    <div class="w-[300px] flex flex-col gap-1">
+                        {%if products.brand%}
+                        <div class="flex flex-row justify-between text-sm">
+                            <p class="font-semibold">Brand:</p>
+                            <p class="font-medium">{{products.brand}}</p>
+                        </div>
+                        {%endif%}
+                        {%if products.os%}
+                        <div class="flex flex-row justify-between text-sm">
+                            <p class="font-semibold">Os:</p>
+                            <p class="font-medium">{{products.os}}</p>
+                        </div>
+                        {%endif%}
+                        {%if products.processor%}
+                        <div class="flex flex-row justify-between text-sm">
+                            <p class="font-semibold">Processor:</p>
+                            <p class="font-medium">{{products.processor}}</p>
+                        </div>
+                        {%endif%}
+                        {%if products.weight%}
+                        <div class="flex flex-row justify-between text-sm">
+                            <p class="font-semibold">Weight:</p>
+                            <p class="font-medium">{{products.weight}} gm</p>
+                        </div>
+                        {%endif%}
+                        {%if products.modal%}
+                        <div class="flex flex-row justify-between text-sm">
+                            <p class="font-semibold">Model:</p>
+                            <p class="font-medium">{{products.modal}} gm</p>
+                        </div>
+                        {%endif%}
+                        {%if products.seller%}
+                        <div class="flex flex-row justify-between text-sm">
+                            <p class="font-semibold">Seller:</p>
+                            <p class="font-medium">{{products.seller}}</p>
+                        </div>
+                        {%endif%}
+                        {%if products.size%}
+                        <div class="flex flex-row justify-between text-sm">
+                            <p class="font-semibold">Size:</p>
+                            <p class="font-medium">{{products.size}}</p>
+                        </div>
+                        {%endif%}
+                    </div>
+                </div>
+                <div class="w-[300px] flex flex-row justify-between py-2">
+                    <a href=""
+                        class="bg-[#ffce12] active:bg-[#ffce12] hover:bg-[#ffce12]/85 active:shadow-none shadow rounded-2xl px-4 py-1">Add
+                        to cart</a>
+                    <a href=""
+                        class="bg-[#ff8400] hover:bg-[#ff8400]/85 active:bg-[#ff8400] shadow active:shadow-none  rounded-2xl px-8 py-1">Buy
+                        Now</a>
+                </div>
+            </div>
+            <div class="border-t py-2 px-2 flex flex-row gap-3 overflow-x-auto no-scrollbar">
+                <img src="{%static '/images/FreeDelivery.png' %}" class="h-15" alt="certified">
+                <img src="{%static '/images/Offers.png' %}" class="h-15" alt="certified">
+                <img src="{%static '/images/Gift.png' %}" class="h-15" alt="certified">
+                <img src="{%static '/images/Non-returnable.png' %}" class="h-15" alt="certified">
+                <img src="{%static '/images/Secure-payment.png' %}" class="h-15" alt="certified">
+                <img src="{%static '/images/POD.png' %}" class="h-15" alt="certified">
+                <img src="{%static '/images/Top-Brand.png' %}" class="h-15" alt="certified">
+            </div>
+            <div class="border-t pt-2 border-zinc-400 px-1">
+                <p class="font-semibold text-lg">About this item:</p>
+                <p class="text-sm font-medium text-zinc-600 px-2 text-justify py-2">
+                    {{products.description}}
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+{%endblock body%}
