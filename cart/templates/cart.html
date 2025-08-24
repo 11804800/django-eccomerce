@@ -1,7 +1,94 @@
 {%extends 'base.html'%}
+{%load static%}
 {%block title%}Tazon | Hpme{%endblock title%}
+{%block scripts%}
+<script>
+    function Increase_quantity(id, quantity) {
+        fetch(`{%url 'update_quantity'%}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{csrf_token}}'
+            },
+            body: JSON.stringify({ action:"increase", id: id }),
+        }).then((response) => response.json())
+            .then((data) => {
+                document.querySelector(`#quantity${id}`).innerHTML = data.quantity
+            })
+            .catch((error) => console.log({ "error": error.message }))
+    }
+
+    function Decrease_quantity(id, quantity) {
+        fetch(`{%url 'update_quantity'%}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{csrf_token}}'
+            },
+            body: JSON.stringify({ action:"descrease", id: id }),
+        }).then((response) => response.json())
+            .then((data) => {
+                document.querySelector(`#quantity${id}`).innerHTML = data.quantity
+            })
+            .catch((error) => console.log({ "error": error.message }))
+    }
+</script>
+{%endblock scripts%}
 {%block body%}
 <main class="py-4 px-2">
-    <h1 class="text-sm">Cart Page</h1>
+    {%if cart%}
+    <div class="px-2 py-4">
+        <h1 class="font-medium text-2xl border-b">Cart</h1>
+        <div class="flex flex-col gap-2.5 pt-5 pb-5">
+            {%for item in cart.items.all%}
+            <div class="w-full shadow rounded-md px-2 py-2 flex flex-col md:flex-row">
+                {%if item.product.preview.preview1%}
+                <img src="{{item.product.preview.preview1}}" class="h-40 object-contain" />
+                {%endif%}
+                <div class="flex flex-col gap-2.5 px-1">
+                    <p class="font-semibold line-clamp-1 md:line-clamp-none">{{item.product.fullname}}</p>
+                    <p class="font-semibold">${{item.product.price}}</p>
+                    <div class="flex flex-row gap-5 justify-between md:justify-normal">
+                        <div>
+                            <button onclick="Decrease_quantity('{{item.id}}','{{item.quantity}}')"
+                                class="hover:bg-zinc-500 rounded-md p-1 hover:text-white active:bg-white active:text-black"><i
+                                    class="fa-solid fa-minus"></i></button>
+                            <span class="px-2 font-medium border py-1 rounded"
+                                id="quantity{{item.id}}">{{item.quantity}}</span>
+                            <button onclick="Increase_quantity('{{item.id}}','{{item.quantity}}')"
+                                class="hover:bg-zinc-500 rounded-md p-1 hover:text-white active:bg-white active:text-black"><i
+                                    class="fa-solid fa-plus"></i></button>
+                        </div>
+                        <a href="{%url 'remove_cart' item.id %}" class="hover:bg-zinc-500 rounded-md p-1 hover:text-white active:bg-white active:text-black">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+            <div
+                class="border-t flex flex-col md:flex-row justify-between justify-items-normal md:items-center pt-2 gap-5">
+                <div class="flex flex-row gap-2.5">
+                    <p class="font-semibold">Total:</p>
+                    <p class="font-medium">${{cart.get_total_price}}</p>
+                </div>
+                <a href="{%url 'orders'%}"
+                    class="bg-[#ffce12] active:bg-[#ffce12] hover:bg-[#ffce12]/85 active:shadow-none shadow rounded-2xl px-8 py-1 w-fit self-center font-medium">
+                    Checkout
+                </a>
+            </div>
+        </div>
+    </div>
+    {%else%}
+    <div class="flex justify-center flex-col gap-2.5 items-center py-12">
+        <img src="{% static '/images/empty-cart.jpg'%}" alt="empty-cart" class="h-[300px] md:h-[500px]" />
+        <div class="flex flex-row gap-1 items-center">
+            <p class="font-medium text-lg pr-1">Your Cart is empty</p>
+            <a href="/"
+                class="font-medium bg-blue-600 text-white px-4 py-1 rounded-md shadow hover:bg-blue-500 active:shadow-none active:bg-blue-600">Start
+                Shopping</a>
+        </div>
+    </div>
+    {%endif%}
 </main>
 {%endblock body%}
