@@ -19,15 +19,14 @@
         integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        .no-scrollbar::-webkit-scrollbar
-        {
+        .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
     </style>
     {%block scripts%}{%endblock scripts%}
 </head>
 
-<body style="font-family: Montserrat;">
+<body style="font-family: Montserrat;" class="relative">
     <header class="bg-[#061129] text-white">
         {%include "./includes/header.html"%}
     </header>
@@ -36,7 +35,26 @@
     <footer class="bg-[#061129]">
         {%include "./includes/footer.html"%}
     </footer>
-    
+    <script>
+        const cart_count = document.querySelector("#cart-count");
+        function fetch_Cart_total() {
+            fetch("{% url 'total_items' %}").
+                then((response) => response.json()).
+                then((data) => {
+                    if (data.total_items != undefined) {
+                        cart_count.innerHTML = data.total_items
+                    }
+                    else
+                    {
+                        cart_count.innerHTML = 0
+                    }
+                }).
+                catch((error) => console.log(error.message))
+
+
+        }
+        fetch_Cart_total()
+    </script>
 </body>
 
 </html>

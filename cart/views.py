@@ -5,6 +5,7 @@ from django.views.decorators.http import require_POST
 from .models import Cart,CartItem
 from django.contrib import messages
 import json
+from eccomerce.middleware import auth
 
 # Create your views here.
 def cart_view(request):
@@ -13,6 +14,7 @@ def cart_view(request):
      
     if cart_id:
         cart=get_object_or_404(Cart,id=cart_id)
+        
     if not cart or not cart.items.exists():
         cart=None
         
@@ -41,8 +43,7 @@ def add_cart(request,product_id):
         cart_item.quantity+=1
         
     cart_item.save()
-    
-    messages.success(request,"Item is added to cart")    
+       
     return redirect("cart")
 
 def cart_remove(request, product_id):
@@ -75,3 +76,21 @@ def update_cart_item_quantity(request):
             return JsonResponse({'error': str(e)}, status=400)
    
     return JsonResponse("Invalid request", status=400)
+
+def cart_total_distinct_items(request):
+    try:
+        cart_id = request.session.get('cart_id')
+        cart = Cart.objects.get(id=cart_id)
+        total_items = cart.items.count()
+        return JsonResponse({'total_items': total_items})
+    
+    except Cart.DoesNotExist:
+        return JsonResponse({'error': 'Cart not found'}, status=404)
+    
+@auth
+def Delete_cart(request):
+    cart_id = request.session.get('cart_id')
+    cart = Cart.objects.get(id=cart_id)
+    cart.delete()
+    del request.session["cart_id"]
+    return redirect("/")

@@ -17,7 +17,7 @@ def Search_view(request):
     return render(request,"Search.html")
 
 
-# @csrf_exempt
+@csrf_exempt
 def add_products(request):
     if request.method=="POST":
         try:

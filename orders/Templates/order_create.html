@@ -1,0 +1,30 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block title%}Order Placing{%endblock title%}
+{%block body%}
+<main class="px-2 flex flex-col gap-12 justify-center items-center py-12">
+    <h1 class="font-medium text-2xl">Place Order</h1>
+    <div class="w-full md:w-[650px]">
+        <form method="POST" action="{%url 'create_order'%}" action class="flex flex-col gap-3.5">
+            {%csrf_token%}
+            <div class="flex flex-row gap-2">
+                <div class="w-full bg-zinc-200 rounded-md px-4 py-2">
+                    <label for="firstname" class="text-zinc-700 font-medium">City</label>
+                    <input type="text" name="city" id="city" class="outline-none w-full">
+                </div>
+                <div class="w-full bg-zinc-200 rounded-md px-4 py-2">
+                    <label for="lastname" class="text-zinc-700 font-medium">State</label>
+                    <input type="text" name="state" id="state" class="outline-none w-full">
+                </div>
+            </div>
+            <div class="w-full bg-zinc-200 rounded-md px-4 py-2">
+                <label for="lastname" class="text-zinc-700 font-medium">
+                    Address
+                </label>
+                <textarea class="outline-none w-full" name="address" id="address" rows="4" type="text"></textarea>
+            </div>
+            <input type="submit" value="Proceed" class="bg-[#061129] w-fit self-center text-white font-medium px-4 py-2 rounded-md active:shadow-none active:bg-[#061129] hover:bg-[#061129]/85">
+        </form>
+    </div>
+</main>
+{%endblock body%}
