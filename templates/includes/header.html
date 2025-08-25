@@ -11,13 +11,14 @@
                 <p>Update your delivery address</p>
             </div>
         </div>
-        <div class="flex flex-row rounded flex-1 w-full">
-            <input type="text" name="" placeholder="Search something..." id=""
-                class="w-full rounded-l px-4 py-2 outline-none font-medium bg-white text-black">
-            <a href="#" class="bg-[#f3a847] text-black px-2 py-2 rounded-r">
+        <form method="POST" action="{% url 'products:product_search'%}" class="flex flex-row rounded flex-1 w-full">
+            {%csrf_token%}
+            <input type="text" name="query" placeholder="Search something..." id=""
+                class="w-full rounded-l px-4 py-2 outline-none font-medium bg-white text-black" required>
+            <button type="submit" class="bg-[#f3a847] text-black px-2 py-2 rounded-r">
                 <i class="fa-solid fa-magnifying-glass text-xl"></i>
             </a>
-        </div>
+        </form>
     </div>
     <nav class="flex flex-row items-center gap-2.5 justify-between shrink-0">
         <a href="{%url 'dashboard'%}" class="px-3 py-1">

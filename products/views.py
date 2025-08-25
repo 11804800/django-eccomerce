@@ -13,8 +13,14 @@ def product_detail(request,id,slug):
     products=get_object_or_404(Products,id=id,slug=slug)
     return render(request,"detail.html",{'products':products})
 
-def Search_view(request):
-    return render(request,"Search.html")
+def search_view(request):
+    if request.method=='POST':
+        query=request.POST.get("query")
+        results = []
+        if query:
+            results = Products.objects.filter(name__icontains=query)
+        
+        return render(request,"productsearch.html",{'query':query,'results':results})
 
 
 @csrf_exempt
