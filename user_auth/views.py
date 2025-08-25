@@ -55,6 +55,7 @@ def login_view(request):
 def dashboard(request):
     return render(request,"dashboard.html")
 
+@auth
 def logout_view(request):
     logout(request)
     return redirect("login")

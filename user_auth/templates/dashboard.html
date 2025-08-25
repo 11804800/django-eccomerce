@@ -1,13 +1,52 @@
 {%extends 'base.html'%}
 {%load static%}
-{%block title%}Tazon | Hpme{%endblock title%}
+{%block title%}User Dashboard{%endblock title%}
 {%block body%}
 <main class="py-4 px-2">
     <h1 class="text-sm">Dashboard</h1>
-    <div>
+    <div class="flex flex-col justify-center items-center gap-3.5 py-4">
         <h1 class="text-4xl py-3 px-2 text-center">Welcome {{request.user.first_name}}</h1>
+        <div class="py-4 w-full md:w-[600px] flex flex-col gap-3.5 justify-center">
+            <div class="flex flex-col bg-zinc-100 px-4 md:px-8 py-4 rounded-md shadow gap-2.5">
+                <p class="font-medium text-zinc-500">Full Name</p>
+                <p class="font-medium">{{request.user.first_name}} {{request.user.last_name}}</p>
+            </div>
+            <div class="flex flex-col bg-zinc-100 px-4 md:px-8 py-4 rounded-md shadow gap-2.5">
+                <p class="font-medium text-zinc-500">Email</p>
+                <p class="font-medium">{{request.user.email}}</p>
+            </div>
+            <div class="flex flex-col bg-zinc-100 px-4 md:px-8 py-4 rounded-md shadow gap-2.5">
+                <p class="font-medium text-zinc-500">Phone Number</p>
+                <p class="font-medium">{{request.user.phone}}</p>
+            </div>
+            <div class="flex flex-col bg-zinc-100 px-4 md:px-8 py-4 rounded-md shadow gap-2.5">
+                <p class="font-medium text-zinc-500">City</p>
+                {%if request.user.city %}
+                <p class="font-medium">{{request.user.city}}</p>
+                {%else%}
+                <p class="font-medium">Not found</p>
+                {%endif%}
+            </div>
+            <div class="flex flex-col bg-zinc-100 px-4 md:px-8 py-4 rounded-md shadow gap-2.5">
+                <p class="font-medium text-zinc-500">State</p>
+                {%if request.user.state%}
+                <p class="font-medium">{{request.user.state}}</p>
+                {%else%}
+                <p class="font-medium">Not found</p>
+                {%endif%}
+            </div>
+            <div class="flex flex-col bg-zinc-100 px-4 md:px-8 py-4 rounded-md shadow gap-2.5">
+                <p class="font-medium text-zinc-500">Address</p>
+                {%if request.user.address%}
+                <p class="font-medium">{{request.user.address}}</p>
+                {%else%}
+                <p class="font-medium">Not found</p>
+                {%endif%}
+            </div>
+        </div>
         <div>
-            <a href="{%url 'logout'%}" class="bg-[#061129] text-white font-medium px-4 py-2 rounded-md shadow-white">Logout</a>
+            <a href="{%url 'logout'%}"
+                class="bg-[#061129] text-white font-medium px-4 py-2 rounded-md shadow-white">Logout</a>
         </div>
     </div>
 </main>
